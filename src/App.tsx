@@ -409,6 +409,7 @@ export default function App() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [activeRegion, setActiveRegion] = useState<'Europe' | 'Asia'>('Europe');
   const [selectedDest, setSelectedDest] = useState<Destination | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState('');
   const bookingFormRef = useRef<HTMLDivElement>(null);
 
   const scrollToSection = (id: string) => {
@@ -613,7 +614,7 @@ export default function App() {
                 <div className="flex flex-col items-center lg:items-end w-full lg:w-auto pt-8 lg:pt-0 border-t lg:border-t-0 border-slate-100 mt-4 lg:mt-0">
                   <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-1">Final Price</p>
                   <p className="text-3xl font-black text-blue-700 tracking-tighter mb-6">{pkg.price}</p>
-                  <button onClick={() => scrollToSection('booking')} className="w-full lg:w-auto bg-blue-700 text-white px-12 py-5 rounded-[1.8rem] text-sm font-black shadow-2xl hover:bg-blue-800 transition-all hover:scale-105 active:scale-95">
+                  <button onClick={() => {setSelectedPackage(pkg.name) ; scrollToSection('booking')}} className="w-full lg:w-auto bg-blue-700 text-white px-12 py-5 rounded-[1.8rem] text-sm font-black shadow-2xl hover:bg-blue-800 transition-all hover:scale-105 active:scale-95">
                     Book Trip
                   </button>
                 </div>
@@ -652,7 +653,7 @@ export default function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Choose Adventure</label>
-                  <select required className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-5 outline-none focus:border-blue-500 focus:bg-white transition-all text-sm font-bold appearance-none">
+                  <select required value={selectedPackage} onChange={(e) => setSelectedPackage(e.target.value)} className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-5 outline-none focus:border-blue-500 focus:bg-white transition-all text-sm font-bold appearance-none">
                     <option value="">-- Click to select --</option>
                     {packages.map(pkg => <option key={pkg.id} value={pkg.name}>{pkg.name}</option>)}
                   </select>
